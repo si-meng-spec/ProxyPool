@@ -1,4 +1,3 @@
-from Logger.logger import Logger
 from Request import MyRequests
 
 
@@ -17,7 +16,6 @@ class ProxyMetaclass(type):
 class ProxyAddressPool(object, metaclass=ProxyMetaclass):
     def __init__(self):
         self.request = MyRequests().sendRequestText
-        self.logger = Logger()
 
     #   获取云代理网站上的公开代理
     def crawl_ip3366(self, page_count=4):
