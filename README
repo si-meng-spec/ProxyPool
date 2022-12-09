@@ -1,0 +1,26 @@
+GetyProxyAddress/			#	获取IP代理池
+	proxyaddress.py			#	爬虫，去各个代理网站获得代理
+	requests.py 			#	请求，用来发送请求
+
+Storage/					#	存储器
+	SocketServer.py			#	Socket服务端，模拟Web前端
+	Storage.py				#	用来将数据存储到data.json文件中
+
+Verification/				#	验证
+	verification.py			#	验证代理是否可用
+
+Logger/						#	日志
+	logger.py				#	记录日志
+	log/
+
+Controller/					#	控制器
+	ProxyController.py		#	获得IP代理池
+	SocketServerController	#	定义Socket服务端口
+	SystemController		#	程序启动
+
+
+免费代理网站：
+https://www.kuaidaili.com/free              快代理
+http://www.ip3366.net/                      云代理
+https://proxy.ip3366.net/                   89ip
+http://www.kxdaili.com/dailiip/2/4.html     开心代理
