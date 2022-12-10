@@ -6,7 +6,7 @@ Storage/					#	存储器
 	SocketServer.py			#	Socket服务端，模拟Web前端
 	Storage.py				#	用来将数据存储到data.json文件中
 
-Verification/				#	验证
+Ver/				#	验证
 	verification.py			#	验证代理是否可用
 
 Logger/						#	日志
