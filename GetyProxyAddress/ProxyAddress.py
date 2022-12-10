@@ -1,4 +1,5 @@
-from Request import MyRequests
+import requests
+from pyquery import PyQuery as pq
 
 
 class ProxyMetaclass(type):
@@ -15,18 +16,21 @@ class ProxyMetaclass(type):
 
 class ProxyAddressPool(object, metaclass=ProxyMetaclass):
     def __init__(self):
-        self.request = MyRequests().sendRequestText
+        self.request = requests.get
 
-    #   获取云代理网站上的公开代理
-    def crawl_ip3366(self, page_count=4):
-        for style in range(1, 3):
-            for url in [f"http://www.ip3366.net/free/?stype={style}&page={count}" for count in
-                        range(1, page_count + 1)]:
-                for inf in self.Template1(url):
-                    yield inf
+    def getHtml(self, url):
+        try:
+            res = self.request(url).text
+        except:
+            return None
+        return res
 
-    #   获取89ip上的公开代理
-    def crawl_Pool89ip(self, page_count=8):
-        for url in [f"https://proxy.ip3366.net/free/?action=china&page={count}" for count in range(1, page_count + 1)]:
-            for inf in self.Template1(url):
-                yield inf
+    def crawl_proxyip3366(self, page_count=4):
+        for page in range(1, page_count + 1):
+            html = self.getHtml(f"https://proxy.ip3366.net/free/?action=china&page={page}")
+            if html is None:
+                continue
+            for tr in pq(html)("table.table-bordered tr").items():
+                _inf = [td.text() for td in tr.find("td").items()]
+                if len(_inf) > 0 and _inf[0] != "":
+                    yield [_inf[3], f"{_inf[0]}:{_inf[1]}"]
