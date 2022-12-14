@@ -1,16 +1,16 @@
-import json
+import os
 import random
-import os, sys
+import sys
+import time
 
 sys.path.append(os.path.abspath(os.path.dirname(os.getcwd())))
-from Ver import Verification
+from utils import singleton
 
 
+@singleton
 class IPProxyStorage:
     def __init__(self):
         self.__data = {"https": [], "http": []}
-        self.ver = Verification()
-        self.folder_name = os.path.dirname(os.path.realpath(__file__))
 
     def get(self, accord: str = "http") -> str or None:
         accord = accord.lower()
@@ -21,20 +21,24 @@ class IPProxyStorage:
     def add(self, accord: str, ip_port: str) -> bool:
         accord = accord.lower()
         if accord in ['https', 'http']:
-            self.__data[accord].append(ip_port)
+            if ip_port not in self.__data[accord]:
+                self.__data[accord].append(ip_port)
             return True
+        return False
+
+    def remove(self, accord: str, ip_port: str) -> bool:
+        accord = accord.lower()
+        if accord not in ['https', 'http']:
+            return False
+        data = self.__data[accord].copy()
+        for inf in data:
+            if ip_port == inf:
+                self.__data[accord].remove(ip_port)
+                return True
         return False
 
     def count(self):
         return {'https': len(self.__data['https']), 'http': len(self.__data['http'])}
 
     def all(self):
-        return self.__data[:]
-
-    def verip(self):
-        self.__data = self.ver.run(self.__data[:])
-
-
-if __name__ == "__main__":
-    storage = IPProxyStorage()
-    storage.verip()
+        return self.__data.copy()
