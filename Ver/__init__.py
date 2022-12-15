@@ -14,13 +14,13 @@ class Verification:
         self.request = requests.get
 
     async def http(self, ip_port: str) -> None:
-        async with aiohttp.ClientSession() as session:
-            try:
+        try:
+            async with aiohttp.ClientSession() as session:
                 async with session.get("http://icanhazip.com/", proxy=f'http://{ip_port}', timeout=10) as resp:
                     if resp.status != 200:
                         self.storage.remove('http', ip_port)
-            except:
-                self.storage.remove('http', ip_port)
+        except:
+            self.storage.remove('http', ip_port)
 
     def https(self, ip_port) -> None:
         try:
