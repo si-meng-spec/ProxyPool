@@ -39,7 +39,5 @@ class Verification:
         loop = asyncio.new_event_loop()
         loop.run_until_complete(main())
         # 验证HTTPS代理
-        res = self.storage.all()['https']
-        print(id(res))
         for ip in self.storage.all()['https']:
             self.https(ip)
