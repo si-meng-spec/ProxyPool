@@ -10,7 +10,7 @@ from utils import singleton
 class IPProxyStorage:
     def __init__(self):
         self.__data = {"https": [], "http": []}
-        self.folder_name = os.path.abspath(os.path.dirname(os.getcwd()))
+        self.folder_name = os.path.dirname(os.path.dirname(__file__))
         with open(f"{self.folder_name}\\data\\http_proxies.txt", 'r', encoding='utf-8') as f:
             for line in f.read().split("\n"):
                 self.__data['http'].append(line)
