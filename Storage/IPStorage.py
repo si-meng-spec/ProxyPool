@@ -1,9 +1,8 @@
 import os
 import random
 import sys
-import time
 
-sys.path.append(os.path.abspath(os.path.dirname(os.getcwd())))
+sys.path.append(os.path.dirname(os.getcwd()))
 from utils import singleton
 
 
@@ -11,11 +10,10 @@ from utils import singleton
 class IPProxyStorage:
     def __init__(self):
         self.__data = {"https": [], "http": []}
-        folder_path = os.path.abspath(os.path.dirname(os.getcwd()))
-        with open(f"{folder_path}\\data\\http_proxies.txt", 'r', encoding='utf-8') as f:
+        with open(f"./data/http_proxies.txt", 'r', encoding='utf-8') as f:
             for line in f.read().split("\n"):
                 self.__data['http'].append(line)
-        with open(f"{folder_path}\\data\\https_proxies.txt", 'r', encoding='utf-8') as f:
+        with open(f"./data/https_proxies.txt", 'r', encoding='utf-8') as f:
             for line in f.read().split("\n"):
                 self.__data['https'].append(line)
 

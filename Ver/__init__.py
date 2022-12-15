@@ -3,7 +3,6 @@ import requests
 import os
 import sys
 import asyncio
-from aiohttp_socks import ProxyConnector
 
 sys.path.append(os.path.abspath(os.path.dirname(os.getcwd())))
 from Storage import IPProxyStorage
@@ -28,7 +27,6 @@ class Verification:
             res = self.request("https://icanhazip.com/", proxies={'https': f'https://{ip_port}'}, timeout=10)
             print(f"https://{ip_port}\t代理可用\t\t{res.text}")
         except:
-            print(f"https://{ip_port}\t代理不可用")
             self.storage.remove('https', ip_port)
 
     def run(self) -> None:
@@ -41,5 +39,7 @@ class Verification:
         loop = asyncio.new_event_loop()
         loop.run_until_complete(main())
         # 验证HTTPS代理
+        res = self.storage.all()['https']
+        print(id(res))
         for ip in self.storage.all()['https']:
             self.https(ip)

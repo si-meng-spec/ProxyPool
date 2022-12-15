@@ -1,8 +1,10 @@
 import os
 import sys
 import time
+sys.path.append(os.path.dirname(os.getcwd()))
+from utils import singleton
 
-
+@singleton
 class LogManager:
     def __init__(self, showlog=True):
         self.name = "Logger"
