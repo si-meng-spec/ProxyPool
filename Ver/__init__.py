@@ -17,15 +17,14 @@ class Verification:
         async with aiohttp.ClientSession() as session:
             try:
                 async with session.get("http://icanhazip.com/", proxy=f'http://{ip_port}', timeout=10) as resp:
-                    if resp.status == 200:
-                        print(f"http://{ip_port}\t代理可用")
+                    if resp.status != 200:
+                        self.storage.remove('http', ip_port)
             except:
                 self.storage.remove('http', ip_port)
 
     def https(self, ip_port) -> None:
         try:
             res = self.request("https://icanhazip.com/", proxies={'https': f'https://{ip_port}'}, timeout=10)
-            print(f"https://{ip_port}\t代理可用\t\t{res.text}")
         except:
             self.storage.remove('https', ip_port)
 
