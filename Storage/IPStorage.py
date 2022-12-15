@@ -1,6 +1,7 @@
 import os
 import random
 import sys
+import copy
 
 sys.path.append(os.path.dirname(os.getcwd()))
 from utils import singleton
@@ -46,4 +47,4 @@ class IPProxyStorage:
         return {'https': len(self.__data['https']), 'http': len(self.__data['http'])}
 
     def all(self):
-        return self.__data.copy()
+        return copy.deepcopy(self.__data)
