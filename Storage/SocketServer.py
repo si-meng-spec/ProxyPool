@@ -17,6 +17,8 @@ class SocketServer:
         self.ip_port = f"{ip}:{port}"
 
     def run(self):
+        self.Log_manager.log("SocketServer", f"已开启Socket服务,访问 {self.ip_port}/http 可以获取HTTP代理")
+        self.Log_manager.log("SocketServer", f"已开启Socket服务,访问 {self.ip_port}/https 可以获取HTTPS代理")
         while True:
             client, address = self.s.accept()
             # 只获取请求头的第一行,进行解析
