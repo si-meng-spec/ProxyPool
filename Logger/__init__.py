@@ -1,8 +1,10 @@
 import os
 import sys
 import time
+
 sys.path.append(os.path.dirname(os.getcwd()))
 from utils import singleton
+
 
 @singleton
 class LogManager:
@@ -27,7 +29,10 @@ class LogManager:
     def clearlog(self):
         for filename in os.listdir(f"{self.folder_name}\\log\\"):
             if filename.split(".")[-1] == "log" and filename != self.filename:
-                os.remove(f"{self.folder_name}\\log\\{filename}")
+                try:
+                    os.remove(f"{self.folder_name}\\log\\{filename}")
+                except PermissionError:
+                    self.log("log", f"{self.folder_name}\\log\\{filename} 文件被占用,删除失败！")
 
     def __del__(self):
         if self.count > 0 and not self.showlog:
