@@ -6,7 +6,7 @@ from utils import singleton
 
 @singleton
 class LogManager:
-    def __init__(self, showlog=True):
+    def __init__(self, showlog=False):
         self.name = "Logger"
         self.showlog = showlog
         self.log_path = ""
@@ -19,6 +19,9 @@ class LogManager:
     # 记录对应日志
     def log(self, name, content):
         self.fp.write(f"{time.strftime(f'[%Y-%m-%d %H:%M:%S]', time.localtime())}[{name}]:{content}\n")
+        if not self.showlog:
+            self.fp.close()
+            self.fp = open(f"{self.folder_name}\\log\\{self.filename}", 'a', encoding='utf-8')
         self.count += 1
 
     def clearlog(self):
