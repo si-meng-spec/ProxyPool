@@ -3,6 +3,7 @@ import requests
 import os
 import sys
 import asyncio
+from concurrent.futures import ThreadPoolExecutor
 
 sys.path.append(os.path.abspath(os.path.dirname(os.getcwd())))
 from Storage import IPProxyStorage
@@ -37,6 +38,9 @@ class Verification:
 
         loop = asyncio.new_event_loop()
         loop.run_until_complete(main())
+
         # 验证HTTPS代理
+        theard_pool = ThreadPoolExecutor(max_workers=60)
         for ip in self.storage.all()['https']:
-            self.https(ip)
+            theard_pool.submit(self.https, ip)
+        theard_pool.shutdown(wait=True)
